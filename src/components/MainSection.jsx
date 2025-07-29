@@ -37,6 +37,14 @@ function MainSection() {
 
   // 지도 초기화 함수 (useCallback으로 최적화)
   const initializeMap = useCallback(() => {
+    // window.kakao가 이미 존재하고 maps 객체도 존재하는지 다시 한번 확인
+    if (!window.kakao || !window.kakao.maps) {
+        console.error("Kakao Maps API is not loaded. Cannot initialize map.");
+        setLoadingLocation(false);
+        setLocationStatus(t('map_load_failed'));
+        return;
+    }
+
     const options = {
       center: new window.kakao.maps.LatLng(37.566826, 126.9786567), // 기본 중심 (서울 시청)
       level: 3,
@@ -63,7 +71,7 @@ function MainSection() {
         }
       });
     });
-  }, [displayMarker, t]); // displayMarker와 t가 변경될 때만 initializeMap 재생성
+  }, [displayMarker, t]);
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
@@ -135,7 +143,7 @@ function MainSection() {
   const handleLocationCertification = () => {
     if (currentAddress && currentLocationCoords && currentAddress !== t('fetching_location') && currentAddress !== t('location_error')) {
       alert(`${t('location_certified_prefix')}: ${currentAddress}`);
-      // 여기에 서버로 위치 정보 전송 등의 추가 로직 구현
+      // 위치 정보 전송 등의 추가 로직 구현
     } else {
       alert(t('please_get_location_first'));
     }
@@ -200,144 +208,103 @@ function MainSection() {
   };
 
   return (
-    <main className="flex-grow max-w-[1200px] mx-auto box-border overflow-y-auto
-                  pt-header-h
-                "
-    >
-      <section
-        // .map-section
-        className="bg-white p-[30px] rounded-lg shadow-md mb-10 text-center
-                   mobile-max:p-5 // 미디어 쿼리 적용
-                  "
-      >
-        <h2
-          // .map-section h2
-          className="text-gray-900 mb-[15px] text-2xl 
-                     mobile-max:text-24 // 미디어 쿼리 적용 (config에 24px 있음)
-                    "
-        >
-          {t('location_certification')}
-        </h2>
-        <p
-          // .map-section p
-          className="text-gray-700 text-base leading-relaxed mb-[25px]"
-        >
-          {t('map_desc')}
-        </p>
-        <div
-          // .map-controls
-          className="mb-5
-                    "
-        >
+    <main className="flex-grow max-w-[1200px] mx-auto box-border overflow-y-auto">
+      {/* .map-section */}
+      <section className="mt-5 mb-10 p-5 text-center bg-white border border-gray-200 rounded-lg shadow-md
+                          desktop:p-[30px]">
+        {/* .map-section h2 */}
+        <h2 className="text-gray-900 mb-[15px] text-2xl ">
+          {t('location_certification')}</h2>
+        {/* .map-section p */}
+        <p className="text-gray-700 text-base leading-relaxed mb-[25px]">
+          {t('map_desc')}</p>
+        {/* .map-controls */}  
+        <div className="mb-5">
+          {/* .map-controls button */}  
           <button
             onClick={getCurrentLocation}
             disabled={loadingLocation}
-            // .map-controls button
             className="bg-brand-primary text-white border-none py-[12px] px-[25px] rounded-md text-base cursor-pointer mx-[10px] transition-colors duration-300
-                       hover:bg-new-blue disabled:bg-gray-400 disabled:cursor-not-allowed
-                       mobile-max:mx-[5px] mobile-max:w-[calc(100%-10px)] // 20px gap + 10px from mx (total 20px)
-                      "
-          >
+                       hover:bg-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed
+                       mobile-max:mx-[5px] mobile-max:w-[calc(100%-10px)] // 20px gap + 10px from mx (total 20px)">
             {loadingLocation ? t('loading') : t('get_my_location')}
           </button>
           <button
             onClick={handleLocationCertification}
             disabled={!currentLocationCoords || loadingLocation}
             className="bg-brand-primary text-white border-none py-[12px] px-[25px] rounded-md text-base cursor-pointer mx-[10px] transition-colors duration-300
-                       hover:bg-new-blue disabled:bg-gray-400 disabled:cursor-not-allowed
-                       mobile-max:mx-[5px] mobile-max:w-[calc(100%-10px)] // 20px gap + 10px from mx (total 20px)
-                      "
-          >
+                       hover:bg-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed
+                       mobile-max:mx-[5px] mobile-max:w-[calc(100%-10px)] // 20px gap + 10px from mx (total 20px)">
             {t('certify_location')}
           </button>
         </div>
-        <div
-          // .location-info
-          className="mt-5 text-15 text-gray-800"
-        >
+        {/* .location-info */} 
+        <div className="mt-5 text-15 text-gray-800">
           <p>
             {t('current_address')}:{' '}
             <strong className="text-brand-primary">{currentAddress}</strong>
           </p>
           <p>{locationStatus}</p>
         </div>
+        {/* #kakao-map */}
         <div
           id="kakao-map"
           ref={mapContainer}
-          // #kakao-map
           className="w-full h-[500px] rounded-lg overflow-hidden relative"
         >
           {loadingLocation && (
-            <div
-              // .map-loading-overlay
-              className="absolute top-0 left-0 w-full h-full bg-white/80 flex justify-center items-center text-lg text-gray-700 z-10"
-            >
+            /* .map-loading-overlay */
+            <div className="absolute top-0 left-0 w-full h-full bg-white/80 flex justify-center items-center text-lg text-gray-700 z-10">
               {t('loading_map')}
             </div>
           )}
         </div>
       </section>
 
-      {/* 새롭게 추가된 입력 주소 인증 박스 */}
-      <section
-        // .address-compare-section
-        className="bg-white p-[30px] rounded-lg shadow-md mb-10 text-center border border-dashed border-gray-300
-                   mobile-max:p-5 // 미디어 쿼리 적용
-                  "
-      >
-        <h2
-          // .address-compare-section h2
-          className="text-gray-900 mb-[15px] text-2xl
-                     mobile-max:text-24 // 미디어 쿼리 적용
-                    "
-        >
+      {/* 입력 주소 인증 박스 */}
+      {/* .address-compare-section */}
+      <section className="bg-white p-5 rounded-lg shadow-md mb-10 text-center border border-dashed border-gray-300
+                          desktop:p-[30px]">
+        {/* .address-compare-section h2 */}
+        <h2 className="text-gray-900 mb-[15px] text-2xl">
           {t('address_compare_title')}
         </h2>
-        <p
-          // .address-compare-section p
-          className="text-gray-700 text-base leading-relaxed mb-[25px]"
-        >
+        {/* .address-compare-section p */}
+        <p className="text-gray-700 text-base leading-relaxed mb-[25px]">
           {t('address_compare_desc')}
         </p>
-        <div
-          // .address-compare-section .input-group
-          className="flex justify-center gap-[10px] mb-5
-                     mobile-max:flex-col mobile-max:gap-[15px]
-                    "
-        >
+        {/* .address-compare-section .input-group */}
+        <div className="flex flex-col justify-center gap-[15px] mb-5
+                        desktop:flex-row mobile-max:gap-[10px]">
+          {/* .address-compare-section input[type="text"] */}                
           <input
             type="text"
             placeholder={t('enter_address_placeholder')}
             value={inputAddress}
             onChange={(e) => setInputAddress(e.target.value)}
             disabled={loadingInputAddress}
-            // .address-compare-section input[type="text"]
-            className="flex-grow max-w-[400px] py-[12px] px-[15px] border border-gray-300 rounded-md text-base text-gray-800
-                       placeholder:text-gray-500 focus:outline-none focus:border-brand-primary focus:shadow-[0_0_0_2px_var(--new-sky-blue)]
-                       mobile-max:w-full mobile-max:max-w-none // 미디어 쿼리 적용
-                      "
+            className="flex-grow w-full max-w-none  py-[12px] px-[15px] border border-gray-300 rounded-md text-base text-gray-800
+                       placeholder:text-gray-500 focus:outline-none focus:border-brand-primary focus:shadow-[0_0_0_1px_var(--color-brand-primary)]
+                       desktop:w-auto desktop:max-w-[400px]"
           />
+          {/* .address-compare-section button */}  
           <button
             onClick={handleInputAddressCertification}
             disabled={loadingInputAddress || !currentLocationCoords}
-            // .address-compare-section button
-            className="bg-new-green text-white border-none py-[12px] px-[25px] rounded-md text-base cursor-pointer transition-colors duration-300
-                       hover:bg-[#3cb371] disabled:bg-gray-400 disabled:cursor-not-allowed
-                       mobile-max:w-full // 미디어 쿼리 적용
-                      "
+            className="bg-emerald-400 text-white w-full border-none py-[12px] px-[25px] rounded-md text-base cursor-pointer transition-colors duration-300
+                       hover:bg-emerald-500 disabled:bg-gray-400 disabled:cursor-not-allowed
+                       desktop:w-auto"
           >
             {loadingInputAddress ? t('loading') : t('compare_addresses')}
           </button>
         </div>
-        <div
-          // .compare-status-info
-          className="mt-[15px] text-15 text-gray-800 font-bold"
-        >
+        {/* .compare-status-info */} 
+        <div className="mt-[15px] text-15 text-gray-800 font-bold">
           <p>{inputAddressStatus}</p>
         </div>
       </section>
 
-      {/* 기존 메인 섹션 콘텐츠 (예시) */}
+      {/* 메인 섹션 콘텐츠 예시 */}
       <section
         // .intro-section
         className="p-[30px] mt-10 bg-gray-50 rounded-lg"
@@ -357,7 +324,7 @@ function MainSection() {
       </section>
       <section
         // .feature-highlight-section
-        className="p-[30px] mt-10 bg-[#eef7ff] rounded-lg"
+        className="p-[30px] my-10 bg-[#eef7ff] rounded-lg"
       >
         <h2
           // .feature-highlight-section h2

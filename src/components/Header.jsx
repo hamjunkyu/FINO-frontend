@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { Link } from 'react-router-dom';
 import '../App.css';
 
 function Header() {
@@ -11,40 +12,41 @@ function Header() {
   };
 
   return (
-    <header className="fixed top-0 z-100 w-full h-header-h flex justify-between items-center px-6 bg-white shadow-header">
+    <header className="fixed top-0 z-999 w-full h-header-h flex flex-row justify-start items-center px-6 bg-white shadow-header">
       {/* Logo */}
-      <a href="/" aria-current="page" className="flex items-center mr-logo-mr no-underline">
-        <span className="text-24 font-bold text-brand-primary">FINO</span>
+      <a href="/" aria-current="page" className="flex items-center no-underline">
+        <span className="text-2xl font-bold ml-2 text-brand-primary">FINO</span>
       </a>
 
       {/* Hamburger 버튼 */}
       <button
         type="button"
         onClick={toggleMenu}
-        className="mobile-max:block desktop:hidden bg-transparent border-none cursor-pointer p-0 text-gray-500" // text-gray-500은 아이콘 색상에 영향을 줄 수 있습니다.
+        className="desktop:hidden flex bg-none border-none ml-auto p-0 cursor-pointer text-gray-500"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15" aria-labelledby="hamburger" className="w-6 h-6">
-          <g fill="currentColor"> 
+          <g fill="currentColor"> {/* currentColor를 사용하여 부모의 text-color를 상속받습니다. */}
             <path d="M1.125 13.375H16.875M1.125 7.375H16.875M1.125 1.375H16.875" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
           </g>
         </svg>
       </button>
 
       {/* Navbar */}
-      <nav className={`flex items-center desktop:h-full mobile-max:w-full desktop:ml-auto ${isMenuOpen ? 'mobile-max:flex' : 'mobile-max:hidden'} mobile-max:absolute mobile-max:top-header-h mobile-max:left-0 mobile-max:w-full mobile-max:bg-white mobile-max:shadow-lg mobile-max:py-5 mobile-max:items-start mobile-max:flex-col mobile-max:h-auto`}>
+      <nav className={`${isMenuOpen ? 'block' : 'hidden'} 
+                        ${isMenuOpen ? 'max-h-auto overflow-y-scroll' : 'overflow-hidden'}
+                        flex-1 absolute h-auto ml-0 top-header-h left-0 w-full p-0  bg-white shadow-lg
+                        desktop:flex desktop:relative desktop:h-full desktop:ml-logo-nav-ml-desktop desktop:top-0 desktop:shadow-none`}>
         {/* List (기능소개, 솔루션 등). */}
-        <ul className="list-none m-0 p-0 flex
-                        desktop:flex-row desktop:items-center desktop:gap-nav-gap-desktop
-                        mobile-max:flex-col mobile-max:w-full mobile-max:gap-0">
+        <ul className="list-none w-full flex justify-start m-0 flex-col items-start px-[16px] py-[10px] gap-nav-gap-mobile
+                        desktop:flex-row desktop:items-center desktop:p-0 desktop:gap-nav-gap-desktop">
           {/* 기능소개 드롭다운 */}
-          <li className="relative group desktop:w-auto mobile-max:w-full mobile-max:text-left">
-            <a className="no-underline text-gray-700 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary
-                          desktop:py-btn-py desktop:px-0
-                          mobile-max:py-mobile-menu-py-item mobile-max:px-mobile-menu-px mobile-max:w-full" role="button">
+          <li className="group flex flex-col relative w-full justify-start items-start nav-list-item-padding 
+                          desktop:flex-row desktop:w-auto desktop:justify-center desktop:items-center">
+            <a className="no-underline flex flex-row justify-center items-center text-15 text-gray-800 font-medium transition-colors duration-200 hover:text-brand-primary"
+                           role="button">
               {t('function_introduction')}
             </a>
-            <ul className="hidden absolute top-full left-0 bg-white shadow-lg rounded-8 py-dropdown-item-py list-none m-0 z-100 whitespace-nowrap min-w-[220px]
-                            group-hover:block
+            <ul className="group-hover:block hidden absolute top-full left-0 bg-white shadow-lg rounded-8 py-dropdown-item-py list-none m-0 z-100 whitespace-nowrap min-w-[220px]
                             mobile-max:static mobile-max:shadow-none mobile-max:p-0 mobile-max:min-w-auto mobile-max:w-full mobile-max:rounded-none mobile-max:flex mobile-max:flex-col">
               <li className="group/dropdown-item">
                 <a href="/design" className="flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-gray-700 text-15 transition-colors duration-200 hover:bg-gray-100 hover:text-brand-primary mobile-max:pl-mobile-dropdown-pl">
@@ -93,10 +95,11 @@ function Header() {
             </ul>
           </li>
           {/* 솔루션 드롭다운 */}
-          <li className="relative group desktop:w-auto mobile-max:w-full mobile-max:text-left">
-            <a className="no-underline text-gray-700 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary
-                          desktop:py-btn-py desktop:px-0
-                          mobile-max:py-mobile-menu-py-item mobile-max:px-mobile-menu-px mobile-max:w-full" role="button">{t('solutions')}</a>
+          <li className="group flex flex-col relative w-full justify-start items-start nav-list-item-padding
+                          desktop:flex-row desktop:w-auto desktop:justify-center desktop:items-center">
+            <a className="no-underline flex flex-row justify-center items-center text-15 text-gray-800 font-medium transition-colors duration-200 hover:text-brand-primary"
+                           role="button">
+              {t('solutions')}</a>
             <ul className="hidden absolute top-full left-0 bg-white shadow-lg rounded-8 py-dropdown-item-py list-none m-0 z-100 whitespace-nowrap min-w-[220px]
                             group-hover:block
                             mobile-max:static mobile-max:shadow-none mobile-max:p-0 mobile-max:min-w-auto mobile-max:w-full mobile-max:rounded-none mobile-max:flex mobile-max:flex-col">
@@ -107,71 +110,73 @@ function Header() {
                 </div>
               </li>
               <li className="group/dropdown-item">
-                <a href="/solutions/inventory-management" className="text-gray-700 hover:text-brand-primary font-semibold transition-colors duration-200 flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-15 mobile-max:pl-mobile-dropdown-pl">{t('inventory_management')}</a>
+                <a href="/solutions/inventory-management" className="text-gray-700 hover:text-brand-primary font-semibold transition-colors duration-200 flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-15 mobile-max:pl-mobile-dropdown-pl">
+                {t('inventory_management')}</a>
               </li>
               <li className="group/dropdown-item">
-                <a href="/solutions/purchase-management" className="text-gray-700 hover:text-brand-primary font-semibold transition-colors duration-200 flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-15 mobile-max:pl-mobile-dropdown-pl">{t('order_management')}</a>
+                <a href="/solutions/purchase-management" className="text-gray-700 hover:text-brand-primary font-semibold transition-colors duration-200 flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-15 mobile-max:pl-mobile-dropdown-pl">
+                {t('purchase_management')}</a>
               </li>
               <li className="group/dropdown-item">
-                <a href="/solutions/distributor-management" className="text-gray-700 hover:text-brand-primary font-semibold transition-colors duration-200 flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-15 mobile-max:pl-mobile-dropdown-pl">{t('distributor_management')}</a>
+                <a href="/solutions/distributor-management" className="text-gray-700 hover:text-brand-primary font-semibold transition-colors duration-200 flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-15 mobile-max:pl-mobile-dropdown-pl">
+                {t('distributor_management')}</a>
               </li>
               <li className="group/dropdown-item">
-                <a href="/solutions/landingpages" className="text-gray-700 hover:text-brand-primary font-semibold transition-colors duration-200 flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-15 mobile-max:pl-mobile-dropdown-pl">{t('landing_page')}</a>
+                <a href="/solutions/landingpages" className="text-gray-700 hover:text-brand-primary font-semibold transition-colors duration-200 flex items-center py-dropdown-item-py px-dropdown-item-px no-underline text-15 mobile-max:pl-mobile-dropdown-pl">
+                {t('landing_page')}</a>
               </li>
             </ul>
           </li>
           {/* 템플릿 (개별 링크) */}
-          <li className="desktop:w-auto mobile-max:w-full mobile-max:text-left">
-            <a href="/solutions/templates" className="no-underline text-gray-700 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary
-                                           desktop:py-btn-py desktop:px-0
-                                           mobile-max:py-mobile-menu-py-item mobile-max:px-mobile-menu-px mobile-max:w-full">{t('templates')}</a>
+          <li className="flex w-full justify-start items-center nav-list-item-padding 
+                          desktop:w-auto desktop:justify-center">
+            <a href="/solutions/templates" 
+               className="no-underline text-gray-800 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary">
+              {t('templates')}</a>
           </li>
           {/* 가격안내 */}
-          <li className="desktop:w-auto mobile-max:w-full mobile-max:text-left">
-            <a href="/pricing" className="no-underline text-gray-700 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary
-                                           desktop:py-btn-py desktop:px-0
-                                           mobile-max:py-mobile-menu-py-item mobile-max:px-mobile-menu-px mobile-max:w-full">{t('price_info')}</a>
+          <li className="flex w-full justify-start items-center nav-list-item-padding 
+                          desktop:w-auto desktop:justify-center">
+            <a href="/pricing"
+               className="no-underline text-gray-800 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary">
+              {t('price_info')}</a>
           </li>
           {/* 사용가이드 (외부 링크) */}
-          <li className="desktop:w-auto mobile-max:w-full mobile-max:text-left">
-            <a href="https://docs.waveon.io/ko" target="_blank" className="no-underline text-gray-700 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary
-                                           desktop:py-btn-py desktop:px-0
-                                           mobile-max:py-mobile-menu-py-item mobile-max:px-mobile-menu-px mobile-max:w-full">
+          <li className="flex w-full justify-start items-center nav-list-item-padding 
+                          desktop:w-auto desktop:justify-center">
+            <a href="https://docs.waveon.io/ko" target="_blank" 
+               className="no-underline text-gray-800 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary">
               {t('guides')}
-              {/* SVG 아이콘 크기 및 마진 조정 */}
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="up-right-from-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-3 h-3 ml-10px align-middle">
                 <path fill="currentColor" d="M384 320c-17.67 0-32 14.33-32 32v96H64V160h96c17.67 0 32-14.32 32-32s-14.33-32-32-32L64 96c-35.35 0-64 28.65-64 64V448c0 35.34 28.65 64 64 64h288c35.35 0 64-28.66 64-64v-96C416 334.3 401.7 320 384 320zM488 0H352c-12.94 0-24.62 7.797-29.56 19.75c-4.969 11.97-2.219 25.72 6.938 34.88L370.8 96L169.4 297.4c-12.5 12.5-12.5 32.75 0 45.25C175.6 348.9 183.8 352 192 352s16.38-3.125 22.62-9.375L416 141.3l41.38 41.38c9.156 9.141 22.88 11.84 34.88 6.938C504.2 184.6 512 172.9 512 160V24C512 10.74 501.3 0 488 0z"></path>
               </svg>
             </a>
           </li>
           {/* 블로그 */}
-          <li className="desktop:w-auto mobile-max:w-full mobile-max:text-left">
-            <a href="/blog" className="no-underline text-gray-700 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary
-                                           desktop:py-btn-py desktop:px-0
-                                           mobile-max:py-mobile-menu-py-item mobile-max:px-mobile-menu-px mobile-max:w-full">{t('blog')}</a>
+          <li className="flex w-full justify-start items-center nav-list-item-padding 
+                          desktop:w-auto desktop:justify-center">
+            <a href="/blog"
+               className="no-underline text-gray-800 text-15 font-medium block transition-colors duration-200 hover:text-brand-primary">
+              {t('blog')}</a>
           </li>
+          {/* 로그인 버튼 */}
+          <Link to="/login" className="no-underline flex w-full justify-start ml-0 p-0 items-center text-brand-primary bg-white rounded-md
+                                      desktop:w-auto desktop:justify-center desktop:ml-auto desktop:nav-list-item-padding">
+            <div className="w-full h-10.5 px-4 leading-10 text-center text-15 font-medium rounded-md 
+                            cursor-pointer transition-colors duration-200 bg-white text-gray-800 border border-gray-300
+                            hover:bg-gray-100 hover:border-gray-200">
+              {t('login')}</div>
+          </Link>
+          {/* 회원가입 버튼 */}
+          <Link to="/signup" className="no-underline flex w-full justify-start ml-0 p-0 items-center text-white bg-brand-primary rounded-md
+                                      desktop:w-auto desktop:justify-center desktop:ml-3 desktop:nav-list-item-padding">
+            <div className="w-full h-10.5 px-4 leading-10 text-center text-15 font-medium rounded-md 
+                            cursor-pointer transition-colors duration-200 bg-new-gradient text-white border-none
+                            hover:opacity-90">
+              {t('signup')}</div>
+          </Link>
         </ul>
       </nav>
-      {/* 로그인/회원가입 버튼 그룹 */}
-      <div className={`flex gap-2.5
-                          desktop:flex-row desktop:w-auto desktop:m-0 desktop:items-center desktop:ml-auto
-                          mobile-max:flex-col mobile-max:w-[calc(100%-var(--spacing-mobile-menu-px)*2)] mobile-max:my-mobile-auth-mt mobile-max:mx-mobile-menu-px mobile-max:items-stretch
-                          ${isMenuOpen ? 'mobile-max:flex' : 'mobile-max:hidden'}`}>
-        <a href="/login" className="w-full desktop:w-auto">
-          <div className="py-btn-py px-btn-px rounded-6 text-15 font-medium cursor-pointer transition-colors duration-200 text-center
-                                 bg-white text-gray-700 border border-gray-300
-                                 hover:bg-gray-100 hover:border-gray-200">
-            {t('login')}
-          </div>
-        </a>
-        <a href="/signup" className="w-full desktop:w-auto">
-          <div className="py-btn-py px-btn-px rounded-6 text-15 font-medium cursor-pointer transition-colors duration-200 text-center
-                                 bg-new-gradient text-white border-none
-                                 hover:opacity-90">
-            {t('signup')}
-          </div>
-        </a>
-      </div>
     </header>
   );
 }

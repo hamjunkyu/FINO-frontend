@@ -1,4 +1,5 @@
 /* src/App.css */
+@import 'tailwindcss';
 
 @theme {
   /* Colors */
@@ -10,19 +11,32 @@
   --color-gray-500: #9e9e9e;
   --color-gray-700: #616161; 
   --color-gray-900: #212121; 
+  --color-neutral-Gray-100: #f5f7fa;
 
   /* Spacing */
-  --spacing-header-h: 46px; 
-  --spacing-logo-mr: 40px; 
-  --spacing-nav-gap-desktop: 30px; 
+  --spacing-header-h: 60px; 
+  --spacing-logo-nav-ml-desktop: 40px;
+  --spacing-nav-gap-desktop: 4px; 
+  --spacing-nav-gap-mobile: 14px;
+  --spacing-nav-list-item-px: 14px;
+  --spacing-nav-list-item-py: 7px;
   --spacing-btn-py: 8px; 
   --spacing-btn-px: 18px; 
   --spacing-dropdown-item-py: 10px; 
   --spacing-dropdown-item-px: 20px; 
-  --spacing-mobile-menu-px: 24px;
-  --spacing-mobile-menu-py-item: 12px;
   --spacing-mobile-dropdown-pl: 40px;
   --spacing-mobile-auth-mt: 10px;
+  --spacing-footer-pt: 50px;
+  --spacing-footer-pb: 60px;
+  --spacing-footer-px: 60px;
+  --spacing-footer-list-mb: 20px;
+  --spacing-footer-list-item-mb: 10px;
+  --spacing-lang-select-py: 8px; 
+  --spacing-lang-select-pr: 30px; 
+  --spacing-lang-select-pl: 12px; 
+  --spacing-login-page-py: 24px;
+  --spacing-login-input-py: 12px;
+  --spacing-login-input-px: 16px;
   --spacing-10px: 10px;
   --spacing-18px: 18px;
 
@@ -30,28 +44,24 @@
   --font-size-12: 12px; 
   --font-size-14: 14px; 
   --font-size-15: 15px;
+  --font-size-18: 18px;
   --font-size-24: 24px; 
-
-  /* Border Radii */
-  --border-radius-6: 6px; 
-  --border-radius-8: 8px; 
+  --font-size-32: 32px; 
 
   /* Box Shadows */
-  --box-shadow-header: 0 4px 10px rgba(0, 0, 0, 0.02); 
+  --box-shadow-header: 0 4px 10px rgba(0, 0, 0, 0.04); 
   --box-shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.1); 
 
-  /* Background Images (그라디언트) */
-  --background-image-new-gradient: linear-gradient(88.95deg, #44b4ff 4.25%, #6650eb 102.33%); /* 회원가입 버튼용 */
+  /* Background Images */
+  --background-image-new-gradient: linear-gradient(88.95deg, #44b4ff 4.25%, #6650eb 102.33%);
+  --background-image-custom-select-arrow: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4L146.2%20208.6%205.4%2069.4c-1.7-1.7-4.5-1.7-6.2%200-1.7%201.7-1.7%204.5%200%206.2l143.6%20143.6c1.7%201.7%204.5%201.7%206.2%200l143.6-143.6c1.7-1.7%201.7-4.5%200-6.2z%22%2F%3E%3C%2Fsvg%3E');
 
-  /* Screens (Breakpoints) */
-  --screen-desktop: 1300px; 
-  --screen-mobile-max: 1299px; 
+  /* breakpoints */
+  --breakpoint-*: initial; 
+  --breakpoint-desktop: 1300px; 
 
   /* Font Families */
-  --font-family-sans: Poppins, "Noto Sans KR", sans-serif;
-
-  /* Z-Index */
-  --z-index-100: 100;
+  --font-family-sans: "Poppins", "Noto Sans KR", sans-serif;
 }
 
 @utility no-underline {
@@ -73,7 +83,43 @@
 }
 
 @layer utilities {
+  .login-page-bg {
+    background-color: var(--color-neutral-Gray-100);
+  }
+}
+
+@layer utilities {
   .pt-header-h {
     padding-top: var(--spacing-header-h);
+  }
+  .shadow-header{
+    box-shadow: var(--box-shadow-header);
+  }
+  .nav-list-item-padding {
+    padding: var(--spacing-nav-list-item-py) var(--spacing-nav-list-item-px)
+  }
+  .footer-padding {
+    padding: var(--spacing-footer-pt) var(--spacing-footer-px) var(--spacing-footer-pb)
+  }
+  .lang-select-padding {
+    padding: var(--spacing-lang-select-py) var(--spacing-lang-select-pr) var(--spacing-lang-select-py) var(--spacing-lang-select-pl);
+  }
+  .login-page-padding {
+    padding: var(--spacing-login-page-py) 0
+  }
+  .login-input-padding {
+    padding: var(--spacing-login-input-py) var(--spacing-login-input-px)
+  }
+}
+
+@layer utilities {
+  .text-14 {
+    font-size: var(--font-size-14);
+  }
+  .text-15 {
+    font-size: var(--font-size-15);
+  }
+  .text-18 {
+    font-size: var(--font-size-18);
   }
 }
