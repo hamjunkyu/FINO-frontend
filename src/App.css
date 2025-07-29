@@ -15,6 +15,7 @@
 
   /* Spacing */
   --spacing-header-h: 60px; 
+  --spacing-header-px: 24px; 
   --spacing-logo-nav-ml-desktop: 40px;
   --spacing-nav-gap-desktop: 4px; 
   --spacing-nav-gap-mobile: 14px;
@@ -22,9 +23,9 @@
   --spacing-nav-list-item-py: 7px;
   --spacing-btn-py: 8px; 
   --spacing-btn-px: 18px; 
-  --spacing-dropdown-item-py: 10px; 
-  --spacing-dropdown-item-px: 20px; 
-  --spacing-mobile-dropdown-pl: 40px;
+  --spacing-dropdown-h: 55px;
+  --spacing-dropdown-item-py: 12px; 
+  --spacing-dropdown-item-px: 16px; 
   --spacing-mobile-auth-mt: 10px;
   --spacing-footer-pt: 50px;
   --spacing-footer-pb: 60px;
@@ -89,14 +90,14 @@
 }
 
 @layer utilities {
-  .pt-header-h {
-    padding-top: var(--spacing-header-h);
-  }
   .shadow-header{
     box-shadow: var(--box-shadow-header);
   }
   .nav-list-item-padding {
     padding: var(--spacing-nav-list-item-py) var(--spacing-nav-list-item-px)
+  }
+  .dropdown-item-padding {
+    padding: var(--spacing-dropdown-item-py) var(--spacing-dropdown-item-px)
   }
   .footer-padding {
     padding: var(--spacing-footer-pt) var(--spacing-footer-px) var(--spacing-footer-pb)
