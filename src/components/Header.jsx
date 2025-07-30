@@ -309,21 +309,21 @@ function Header() {
                 </li>
                 <li className="group/dropdown-item">
                   <a href="/solutions/inventory-management" 
-                     className="w-full block min-w-[140px] m-w-[320px] text-left font-semibold text-gray-700 break-keep dropdown-item-padding no-underline transition-colors duration-200 hover:text-brand-primary
+                     className="w-full block min-w-[140px] m-w-[320px] text-left font-semibold text-gray-700 break-keep dropdown-item-padding no-underline transition-colors duration-200 hover:bg-gray-100 hover:text-brand-primary
                                 desktop:w-auto">
                     {t('inventory_management')}
                   </a>
                 </li>
                 <li className="group/dropdown-item">
                   <a href="/solutions/purchase-management" 
-                     className="w-full block min-w-[140px] m-w-[320px] text-left font-semibold text-gray-700 break-keep dropdown-item-padding no-underline transition-colors duration-200 hover:text-brand-primary
+                     className="w-full block min-w-[140px] m-w-[320px] text-left font-semibold text-gray-700 break-keep dropdown-item-padding no-underline transition-colors duration-200 hover:bg-gray-100 hover:text-brand-primary
                      desktop:w-auto">
                     {t('purchase_management')}
                   </a>
                 </li>
                 <li className="group/dropdown-item">
                   <a href="/solutions/distributor-management" 
-                     className="w-full block min-w-[140px] m-w-[320px] text-left font-semibold text-gray-700 break-keep dropdown-item-padding no-underline transition-colors duration-200 hover:text-brand-primary
+                     className="w-full block min-w-[140px] m-w-[320px] text-left font-semibold text-gray-700 break-keep dropdown-item-padding no-underline transition-colors duration-200 hover:bg-gray-100 hover:text-brand-primary
                      desktop:w-auto">
                     {t('distributor_management')}
                   </a>

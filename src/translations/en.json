@@ -98,5 +98,14 @@
     "login_here": "Log in here",
     "kakao_signup_initiated": "Kakao signup process started.",
     "google_signup_initiated": "Google signup process started.",
-    "email_signup_initiated": "Email signup process started."
+    "email_signup_initiated": "Email signup process started.",
+
+    "account_profile_change": "Change Profile Picture",
+    "account_email_label": "Email",
+    "account_password_label": "Password",
+    "account_password_reset": "Reset Password",
+    "account_delete_title": "Delete Account",
+    "account_delete_desc": "All data for your account, including created content, will be deleted. This action cannot be undone.",
+    "account_delete_button": "Delete Account",
+    "account_confirm_delete": "All data for your account will be deleted, and this action cannot be undone. Are you sure you want to delete your account?"
   }

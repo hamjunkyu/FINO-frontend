@@ -98,5 +98,14 @@
     "login_here": "로그인하기",
     "kakao_signup_initiated": "카카오 회원가입이 시작됩니다.",
     "google_signup_initiated": "구글 회원가입이 시작됩니다.",
-    "email_signup_initiated": "이메일 회원가입이 시작됩니다."
+    "email_signup_initiated": "이메일 회원가입이 시작됩니다.",
+
+    "account_profile_change": "프로필 사진 변경",
+    "account_email_label": "이메일",
+    "account_password_label": "비밀번호",
+    "account_password_reset": "비밀번호 초기화",
+    "account_delete_title": "계정 삭제",
+    "account_delete_desc": "제작한 콘텐츠를 포함하여 계정의 모든 데이터가 삭제됩니다. 이 작업은 되돌릴 수 없습니다.",
+    "account_delete_button": "계정 삭제",
+    "account_confirm_delete": "계정의 모든 데이터가 삭제되며, 이 작업은 되돌릴 수 없습니다. 정말로 삭제하시겠습니까?"
   }
