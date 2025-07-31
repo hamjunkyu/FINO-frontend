@@ -62,7 +62,7 @@ function MainSection() {
 
       geocoder.current.coord2Address(latlng.getLng(), latlng.getLat(), function (result, status) {
         if (status === window.kakao.maps.services.Status.OK) {
-          const detailAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
+          const detailAddr = result[0].road_address ? result[0].road_address.address_name : '';
           setCurrentAddress(detailAddr || result[0].address.address_name);
           setLocationStatus(t('location_selected'));
         } else {
@@ -109,7 +109,7 @@ function MainSection() {
 
           geocoder.current.coord2Address(lng, lat, function (result, status) {
             if (status === window.kakao.maps.services.Status.OK) {
-              const detailAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
+              const detailAddr = result[0].road_address ? result[0].road_address.address_name : '';
               setCurrentAddress(detailAddr || result[0].address.address_name);
               setLocationStatus(t('current_location_found'));
             } else {
