@@ -25,16 +25,6 @@ function SignUpPage() {
     }, 1500);
   };
 
-  const handleEmailSignUp = () => {
-    setIsLoading(true);
-    // 실제 이메일 회원가입 로직 추가
-    setTimeout(() => {
-      setIsLoading(false);
-      alert(t('email_signup_initiated'));
-      // navigate('/signup/email'); // 이메일 가입 상세 페이지로 이동
-    }, 1500);
-  };
-
   return (
     // 회원가입 페이지 전체 컨테이너
     <div className="relative flex flex-col justify-center items-center gap-5 w-screen max-w-full min-h-screen login-page-padding login-page-bg">
@@ -45,14 +35,14 @@ function SignUpPage() {
       </Link>
 
       {/* SignUpPageWrapper */}
-      <div className="box-border flex flex-col items-center justify-center gap-3 max-w-[600px] w-full text-center break-keep font-sans">
+      <div className="flex flex-col items-center justify-center gap-3 max-w-[600px] w-full text-center break-keep font-sans">
         {/* Title */}
         <h1 className="text-gray-900 text-2xl font-bold leading-[160%] tracking-[-.8px] m-0">
           {t('signup_title_fino')} 
         </h1>
 
         {/* SignUpPageContainer */}
-        <div className="w-full max-w-[600px] h-max flex flex-col gap-5 rounded-xl p-10 bg-white shadow-lg">
+        <div className="w-full max-w-[600px] h-max flex flex-col gap-5 rounded-xl p-10 bg-white shadow-container">
           {/* OAuth 버튼들 */}
           {/* 카카오 가입 */}
           <button
@@ -90,13 +80,12 @@ function SignUpPage() {
           </div>
 
           {/* 이메일로 가입하기 */}
-          <button
-            onClick={handleEmailSignUp}
-            disabled={isLoading}
+          <Link
+            to="/signup-email"
             className="font-bold w-full h-10 flex justify-center items-center gap-4 rounded-sm border border-gray-300 py-2 px-0 bg-brand-primary text-white text-sm tracking-[-.084px] cursor-pointer hover:opacity-90"
           >
             {t('signup_with_email')}
-          </button>
+          </Link>
 
           {/* 이미 가입하셨나요? 로그인하기 */}
           <div className="flex justify-center gap-1 tracking-[-.7px]"> 

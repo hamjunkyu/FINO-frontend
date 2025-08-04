@@ -22,6 +22,9 @@ function LoginPage() {
     if (!email) {
       setEmailError(t('email_required'));
       isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) { 
+      setEmailError(t('email_error'));
+      isValid = false;
     }
     if (!password) {
       setPasswordError(t('password_required'));
@@ -55,18 +58,18 @@ function LoginPage() {
       </Link>
 
       {/* LogInPageContainer */}
-      <div className="box-border flex flex-col items-center justify-center gap-2 max-w-[600px] w-full text-center break-keep font-sans">
+      <div className="flex flex-col items-center justify-center gap-2 max-w-[600px] w-full text-center break-keep font-sans">
         {/* Title */} 
-        <h1 className="text-2xl font-bold leading-[160%] tracking-[-.48px] text-gray-900 m-0">
+        <h1 className="text-2xl font-bold leading-[160%] tracking-[-.9px] text-gray-900 m-0">
           {t('login_title_fino')}
         </h1>
         {/* Desc */}
-        <h2 className="text-14 font-medium leading-[160%] tracking-[-.28px] text-gray-700 mb-8">
+        <h2 className="text-14 font-medium leading-[160%] tracking-[-.7px] text-gray-700 mb-8">
           {t('login_desc_fino')} 
         </h2>
 
         {/* LogInFormContainer */}
-        <div className="w-full max-w-[600px] h-max flex flex-col gap-3.5 rounded-xl p-10 bg-white shadow-lg">
+        <div className="w-full max-w-[600px] h-max flex flex-col gap-3.5 rounded-xl p-10 bg-white shadow-container">
           <form onSubmit={handleLogin} className="flex flex-col gap-5">
             {/* Email Input */}
             <span className="w-full">
@@ -78,7 +81,7 @@ function LoginPage() {
                   <span className="text-red-500 ml-1">*</span>
                 </div>
                 {/* InputWrapper */}
-                <div className="flex items-center w-full gap-2.5 rounded-md border border-gray-300 login-input-padding">
+                <div className={`flex items-center w-full gap-2.5 rounded-md border login-input-padding ${emailError ? 'border-red-500' : 'border-gray-300 focus-within:border-brand-primary'}`}>
                   <input
                     id="email"
                     type="email"
@@ -88,7 +91,7 @@ function LoginPage() {
                       setEmail(e.target.value);
                       setEmailError('');
                     }}
-                    className={`flex-1 h-5 border-none overflow-clip py-0.25 px-0.5 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-brand-primary shadow-input-focus ${emailError ? 'border-red-500' : 'border-gray-300'}`}
+                    className="flex-1 h-5 border-none overflow-clip py-0.25 px-0.5 text-gray-800 placeholder:text-gray-500 focus:outline-none"
                   />
                   {emailError && ( // 이메일 형식 X
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-exclamation" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" 
@@ -104,7 +107,7 @@ function LoginPage() {
                   )}
                 </div>
                 <p className={`block h-4 m-0 ml-1 text-red-500 text-sm font-medium leading-3 ${emailError ? 'visible' : 'invisible'}`}>
-                  {emailError ? t('email_error') : ''}
+                  {emailError ? emailError : ''}
                 </p>
               </div>
             </span>
@@ -116,10 +119,10 @@ function LoginPage() {
                 {/* Title */}
                 <div className="text-gray-900 text-15 font-medium leading-[160%] tracking-[-.32px]">
                   <label htmlFor="password" className="cursor-default">{t('password')}</label>
-                  <span className="text-red-500 text-sm">*</span>
+                  <span className="text-red-500 ml-1">*</span>
                 </div>
                 {/* InputWrapper */}
-                <div className="flex items-center w-full gap-2.5 rounded-md border border-gray-300 login-input-padding">
+                <div className={`flex items-center w-full gap-2.5 rounded-md border login-input-padding ${emailError ? 'border-red-500' : 'border-gray-300 focus-within:border-brand-primary'}`}>
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
@@ -129,7 +132,7 @@ function LoginPage() {
                         setPassword(e.target.value);
                         setPasswordError('');
                     }}
-                    className={`flex-1 h-5 border-none overflow-clip py-0.25 px-0.5 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-brand-primary shadow-input-focus ${passwordError ? 'border-red-500' : 'border-gray-300'}`}
+                    className={"flex-1 h-5 border-none overflow-clip py-0.25 px-0.5 text-gray-800 placeholder:text-gray-500 focus:outline-none"}
                   />
                   <button
                     type="button"

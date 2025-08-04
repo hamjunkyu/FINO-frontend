@@ -54,6 +54,7 @@
   /* Box Shadows */
   --box-shadow-header: 0 4px 10px rgba(0, 0, 0, 0.04); 
   --box-shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  --box-shadow-container: 2px 6px 32px 0 rgba(0, 0, 0, .1);
 
   /* Background Images */
   --background-image-new-gradient: linear-gradient(88.95deg, #44b4ff 4.25%, #6650eb 102.33%);
@@ -92,9 +93,6 @@
 }
 
 @layer utilities {
-  .shadow-header{
-    box-shadow: var(--box-shadow-header);
-  }
   .nav-list-item-padding {
     padding: var(--spacing-nav-list-item-py) var(--spacing-nav-list-item-px)
   }
@@ -129,3 +127,12 @@
     font-size: var(--font-size-18);
   }
 }
+
+@layer utilities {
+  .shadow-header{
+    box-shadow: var(--box-shadow-header);
+  }
+  .shadow-container{
+    box-shadow: var(--box-shadow-container);
+  }
+}  
