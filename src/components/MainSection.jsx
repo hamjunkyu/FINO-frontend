@@ -1,6 +1,7 @@
 // src/components/MainSection.jsx
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { authenticateLocation } from '../services/user';
 
 function MainSection() {
   const mapContainer = useRef(null);
@@ -140,14 +141,29 @@ function MainSection() {
     }
   };
 
-  const handleLocationCertification = () => {
-    if (currentAddress && currentLocationCoords && currentAddress !== t('fetching_location') && currentAddress !== t('location_error')) {
-      alert(`${t('location_certified_prefix')}: ${currentAddress}`);
-      // 위치 정보 전송 등의 추가 로직 구현
-    } else {
-      alert(t('please_get_location_first'));
+  const handleLocationCertification = async () => {
+  if (
+    currentAddress &&
+    currentLocationCoords &&
+    currentAddress !== t('fetching_location') &&
+    currentAddress !== t('location_error')
+  ) {
+    try {
+      // 실제로는 로그인된 사용자의 userId를 받아와야 함(여기선 임시로 1)
+      const userId = 1;
+      const res = await authenticateLocation({
+        userId,
+        latitude: currentLocationCoords.lat,
+        longitude: currentLocationCoords.lng,
+      });
+      alert(res.data.message); // 백엔드에서 온 인증 결과 메시지
+    } catch (err) {
+      alert('위치 인증 실패: ' + (err.response?.data?.message || err.message));
     }
-  };
+  } else {
+    alert(t('please_get_location_first'));
+  }
+};
 
   // 두 지점 간의 거리 계산 함수 (Haversine formula)
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
